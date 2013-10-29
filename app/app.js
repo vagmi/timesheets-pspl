@@ -11,16 +11,38 @@
 
   App.ClientView = Backbone.View.extend({
     tagName: 'li',
-    template: _.template($("#clientTemplate").text()),
+    events: {
+      "click a.edit" : 'editClient',
+      "submit form" : 'saveClient',
+      "click button.save": 'saveClient'
+    },
+    viewTemplate: _.template($("#clientTemplate").text()),
+    editTemplate: _.template($("#editClientTemplate").text()),
+    editClient: function(){
+      this.model.editMode=true;
+      this.render();
+      return false;
+    },
+    saveClient: function() {
+      var name = this.$("input[name=name]").val();
+      var location = this.$("input[name=location]").val();
+      this.model.set('name',name);
+      this.model.set('location',location);
+      this.model.editMode=false;
+      this.render();
+      return false;
+    },
     render: function(){
-      this.$el.html(this.template({model: this.model.attributes}));
+      var tmpl = this.viewTemplate;
+      if(this.model.editMode) {
+        tmpl = this.editTemplate;
+      }
+      this.$el.html(tmpl({model: this.model.attributes}));
       return this.$el;
     }
   });
-
   App.ClientsView = Backbone.View.extend({
     tagName: 'section',
-    attributes: {id: "clients", class: "main-section", style: "display: none"},
     template: _.template($("#clientsTemplate").text()),
     events : {
       'click button.add-client' : 'addClient'
@@ -39,36 +61,75 @@
 
     render: function(){
       this.$el.append($(this.template()));
-      //this.$("button.add-client").click(this.addClient);
       this.collection.each(this.renderClient,this);
       return this.$el;
     }
   });
+  App.TimeView = Backbone.View.extend({
+    tagName: 'section',
+    template: _.template($("#timeTemplate").text()),
+    render: function(){
+      this.$el.html(this.template());
+      return this.$el;
+    }
+  });
+  App.ProjectsView = Backbone.View.extend({
+    tagName: 'section',
+    template: _.template($("#projectsTemplate").text()),
+    render: function(){
+      this.$el.html(this.template());
+      return this.$el;
+    }
+  });
 
-  window.renderClients = function(){
+  App.Router = Backbone.Router.extend({
+    routes: {
+    'clients': 'showClients',
+    'projects': 'showProjects',
+    'time' : 'showTime'
+    },
+    closeCurrentView: function() {
+      if(this.currentView) {
+        this.currentView.remove();
+      }
+    },
+    showTime: function() {
+      this.closeCurrentView();
+      this.currentView = new App.TimeView();
+      $(".main.container").html(this.currentView.render());
+      this.trigger("active:change",'time');
+    },
+    showProjects: function() {
+      this.closeCurrentView();
+      this.currentView = new App.ProjectsView();
+      $(".main.container").html(this.currentView.render());
+      this.trigger("active:change",'projects');
+    },
+    showClients: function() {
+      this.closeCurrentView();
+      this.currentView = new App.ClientsView({collection: window.clients});
+      $(".main.container").html(this.currentView.render());
+      this.trigger("active:change",'clients');
+    }
+  });
+  App.NavigationView = Backbone.View.extend({
+    initialize: function(){
+      this.model.on('active:change',this.markActive,this);
+    },
+    markActive: function(active) {
+      this.$("li").removeClass("active");
+      this.$("li."+active).addClass("active");
+    }
+  });
+  $(function(){
     window.clients = new App.Clients([{name: "PSPL", location: "Pune"},
                                      {name: "Reduce Data", location: "San Francisco"},
                                      {name: "Thoughtworks", location: "Chennai"}]);
-    var clientsView = new App.ClientsView({collection: clients});
 
-    $(".main.container").append(clientsView.render());
-  };
-
-  window.timeEntries = [];
-  var setupRouter = function() {
-    $("ul.main-nav li a").click(function(){
-      $("ul.main-nav li").removeClass("active");
-      var $link = $(this);
-      $link.parent().addClass("active");
-      var sectionId = $link.attr("class");
-      $("section.main-section").hide();
-      $("section#"+sectionId).show();
-      return false;
-    });
-    $("ul.main-nav li a.time").click();
-  };
-  $(function(){
-    setupRouter();
-    renderClients();
+    App.routerObject = new App.Router();
+    App.navigation = new App.NavigationView({model: App.routerObject, el: $("ul.nav.navbar-nav.main-nav")});
+    Backbone.history.start();
   });
+
+
 })(jQuery);
