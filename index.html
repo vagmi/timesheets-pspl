@@ -12,7 +12,15 @@
     <script src="/lib/js/underscore-min.js"></script>
     <script src="/lib/js/backbone-min.js"></script>
 
-    <script src="/app/app.js"></script>
+    <script type="text/template" id="clientTemplate">
+      <%=model.name%> at <%=model.location%>
+    </script>
+    <script type="text/template" id="clientsTemplate">
+      <h1>Clients</h1>
+      <button class="add-client btn btn-primary">Add Client</button>
+      <ul>
+      </ul>
+    </script>
     <script type="text/template" id="time-entry-template">
         <div class="row time-entry">
           <div class="project col-xs-3">Project1</div>
@@ -82,10 +90,6 @@
       <section id="projects" class="main-section">
       <h1>Projects</h1>
       </section>
-      <section id="clients" class="main-section">
-      <h1>Clients</h1>
-      <button id="add-client" class="btn btn-primary">Add Client</button>
-      </section>
 
     </div>
   </div>
@@ -94,5 +98,6 @@
         <p class="text-muted credit">Created for PSPL</p>
       </div>
     </div>
+    <script src="/app/app.js"></script>
   </body>
   </html>

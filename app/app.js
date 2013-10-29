@@ -11,23 +11,35 @@
 
   App.ClientView = Backbone.View.extend({
     tagName: 'li',
+    template: _.template($("#clientTemplate").text()),
     render: function(){
-      this.$el.html("Client : " + this.model.get('name') + " at " + this.model.get('location'));
+      this.$el.html(this.template({model: this.model.attributes}));
       return this.$el;
     }
   });
 
   App.ClientsView = Backbone.View.extend({
-    tagName: 'ul',
+    tagName: 'section',
+    attributes: {id: "clients", class: "main-section", style: "display: none"},
+    template: _.template($("#clientsTemplate").text()),
+    events : {
+      'click button.add-client' : 'addClient'
+    },
     initialize: function(){
       this.collection.on('add',this.renderClient,this);
     },
+    addClient: function() {
+      var m = this.collection.create({name: "Rails Factory", location: "Chennai"});
+      this.collection.add(m);
+    },
     renderClient: function(model){
       var clientView =new App.ClientView({model: model});
-      this.$el.append(clientView.render());
+      this.$("ul").append(clientView.render());
     },
 
     render: function(){
+      this.$el.append($(this.template()));
+      //this.$("button.add-client").click(this.addClient);
       this.collection.each(this.renderClient,this);
       return this.$el;
     }
@@ -38,13 +50,8 @@
                                      {name: "Reduce Data", location: "San Francisco"},
                                      {name: "Thoughtworks", location: "Chennai"}]);
     var clientsView = new App.ClientsView({collection: clients});
-    $("#clients").append(clientsView.render());
-    $("#add-client").click(function(){
-      console.log("add called");
-      var rf = window.clients.create({name: "Rails Factory", location: "Chennai"});
-      window.clients.add(rf);
-      return false;
-    });
+
+    $(".main.container").append(clientsView.render());
   };
 
   window.timeEntries = [];
