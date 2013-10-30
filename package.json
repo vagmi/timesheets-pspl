@@ -1,0 +1,10 @@
+{
+  "name": "ts-backbone",
+  "version": "0.0.1",
+  "dependencies": {
+    "grunt": "0.4.1"
+  },
+  "devDependencies": {
+    "grunt-contrib-jshint": "~0.7.0"
+  }
+}
