@@ -1,0 +1,11 @@
+{
+  "name": "ts-bootsrap",
+  "dependencies": {
+    "jquery": "*",
+    "backbone": "*",
+    "requirejs": "*",
+    "text": "*",
+    "underscore": "*",
+    "bootstrap": "*"
+  }
+}

@@ -1,2 +1,4 @@
 r.js
 build
+node_modules
+scripts/bower_components

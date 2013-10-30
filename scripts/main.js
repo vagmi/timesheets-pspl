@@ -13,7 +13,7 @@
      "requirelib": "lib/js/require",
      "jquery": "lib/js/jquery-2.0.3.min",
      "backbone": "lib/js/backbone-min",
-     "underscore": "alib/js/underscore-min",
+     "underscore": "lib/js/underscore-min",
      "text": "lib/js/text",
      "templates": "app/templates"
    }
