@@ -10,11 +10,11 @@
      }
    },
    paths : {
-     "requirelib": "lib/js/require",
-     "jquery": "lib/js/jquery-2.0.3.min",
-     "backbone": "lib/js/backbone-min",
-     "underscore": "lib/js/underscore-min",
-     "text": "lib/js/text",
+     "requirelib": "bower_components/requirejs/require",
+     "jquery": "bower_components/jquery/jquery",
+     "backbone": "bower_components/backbone/backbone-min",
+     "underscore": "bower_components/underscore/underscore-min",
+     "text": "bower_components/text/text",
      "templates": "app/templates"
    }
  });
