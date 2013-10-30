@@ -2,9 +2,58 @@
 <html>
   <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-    <title>Timesheets application</title>
+    <title>Timesheets</title>
+    <link href="/app/lib/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/app/css/bootstrap-addons.css" rel="stylesheet" type="text/css">
+    <link href="/app/css/app.css" rel="stylesheet" type="text/css">
+    <!-- remove this line production -->
     <script data-main="app/main" src="app/lib/js/require.js"></script>
+    <!-- end -->
+    <!-- uncomment the following block in production -->
+      <!--<script src="build/main-built.js"></script>-->
+      <!--<script>-->
+        <!--require(['app/main']);-->
+      <!--</script>-->
+    <!-- end -->
   </head>
   <body>
+  <div id="wrap">
+    <header class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand">Timesheets</a>
+        </div>
+        <ul class="nav navbar-nav navbar-right">
+          <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">User Name <b class="caret"></b></a>
+          <ul class="dropdown-menu">
+            <li><a href="#">Action</a></li>
+            <li><a href="#">One more separated link</a></li>
+          </ul>
+          </li>
+        </ul>
+        <nav class="collapse navbar-collapse">
+          <ul class="nav navbar-nav main-nav">
+            <li class="active time"><a href="#time">Time</a></li>
+            <li class="projects"><a href="#projects">Projects</a></li>
+            <li class="clients"><a href="#clients">Clients</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+    <div class="main container">
+    </div>
+  </div>
+   <div id="footer">
+      <div class="container">
+        <p class="text-muted credit">Created for PSPL</p>
+      </div>
+    </div>
   </body>
-</html>
+  </html>
